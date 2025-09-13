@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Chamados - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  
+  <!-- 🔹 TAGS PWA -->
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#111111">
+  <!-- iOS (opcional mas recomendado) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+
+  <style>
+    .card-custom {
+      border-radius: 1rem;
+      border: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h3 {
+      font-weight: 700;
+      text-align: center;
+    }
+    .btn-sm {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 0.5rem;
+    }
+    .table th {
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <div class="container mt-5 flex-grow-1">
+
+    <!-- Título -->
+    <h3 class="mb-5">📋 Lista de Chamados (Admin)</h3>
+
+    {% if chamados %}
+    <!-- Tabela para desktop -->
+    <div class="table-responsive d-none d-md-block">
+      <table class="table table-hover align-middle shadow-sm">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Loja</th>
+            <th>Descrição</th>
+            <th>Prioridade</th>
+            <th>Status</th>
+            <th>Solicitado por</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for chamado in chamados %}
+          <tr>
+            <td>{{ chamado.id }}</td>
+            <td>{{ chamado.loja }}</td>
+            <td>{{ chamado.descricao }}</td>
+            <td class="text-capitalize">{{ chamado.prioridade }}</td>
+            <td>
+              {% if chamado.status == "aberto" %}
+                <span class="badge bg-primary">Aberto</span>
+              {% elif chamado.status == "visualizado" %}
+                <span class="badge bg-warning text-dark">Visualizado</span>
+              {% elif chamado.status == "concluído" %}
+                <span class="badge bg-success">Concluído</span>
+              {% else %}
+                <span class="badge bg-secondary">{{ chamado.status }}</span>
+              {% endif %}
+            </td>
+            <td>{{ chamado.solicitado_por }}</td>
+            <td class="text-center d-flex gap-2 justify-content-center">
+              <a href="/admin/editar/{{ chamado.id }}" class="btn btn-warning btn-sm">✏️ Editar</a>
+              <form method="post" action="/admin/concluir/{{ chamado.id }}">
+                <button type="submit" class="btn btn-success btn-sm">✅ Concluir</button>
+              </form>
+              <form method="post" action="/admin/deletar/{{ chamado.id }}">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este chamado?');">🗑️ Excluir</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cards para mobile -->
+    <div class="d-md-none">
+      {% for chamado in chamados %}
+      <div class="card card-custom mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Chamado #{{ chamado.id }} - {{ chamado.loja }}</h5>
+          <p class="mb-1"><strong>Descrição:</strong> {{ chamado.descricao }}</p>
+          <p class="mb-1"><strong>Prioridade:</strong> {{ chamado.prioridade | capitalize }}</p>
+          <p class="mb-1"><strong>Status:</strong>
+            {% if chamado.status == "aberto" %}
+              <span class="badge bg-primary">Aberto</span>
+            {% elif chamado.status == "visualizado" %}
+              <span class="badge bg-warning text-dark">Visualizado</span>
+            {% elif chamado.status == "concluído" %}
+              <span class="badge bg-success">Concluído</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ chamado.status }}</span>
+            {% endif %}
+          </p>
+          <p class="mb-3"><strong>Solicitado por:</strong> {{ chamado.solicitado_por }}</p>
+          <div class="d-grid gap-2">
+            <a href="/admin/editar/{{ chamado.id }}" class="btn btn-warning btn-lg">✏️ Editar</a>
+            {% if chamado.status != "concluído" %}
+            <form method="post" action="/admin/concluir/{{ chamado.id }}">
+              <button type="submit" class="btn btn-success btn-lg">✅ Concluir</button>
+            </form>
+            {% endif %}
+            <form method="post" action="/admin/deletar/{{ chamado.id }}">
+              <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Tem certeza que deseja excluir este chamado?');">🗑️ Excluir</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <p class="alert alert-info text-center">Nenhum chamado encontrado.</p>
+    {% endif %}
+
+    <div class="mt-4 text-center">
+      <a href="/dashboard-admin" class="btn btn-secondary btn-lg">⬅ Voltar ao Dashboard</a>
+    </div>
+
+  </div>
+
+  <!-- Rodapé com logo -->
+  <footer class="footer text-center mt-4">
+    <img src="/static/images/logo_text.png" alt="InfraCheck+" class="brand-logo mb-2" style="max-height: 32px;">
+    <p class="text-muted mb-0"><small>Sistema de Chamados • InfraCheck+</small></p>
+  </footer>
+
+  <!-- 🔹 REGISTRO DO SERVICE WORKER -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(console.error);
+      });
+    }
+  </script>
+
+</body>
+</html>

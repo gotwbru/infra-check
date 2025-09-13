@@ -1,0 +1,195 @@
+/* ----------------------------
+   Tema Global - InfraCheck+
+   ---------------------------- */
+
+/* Fonte padrão */
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #1c1c1c; /* Cor base principal */
+    margin: 0;
+    padding: 0;
+}
+
+/* Títulos */
+h1, h2, h3, h4 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1c1c1c;
+}
+
+/* Card padrão */
+.card {
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease-in-out;
+    background-color: #fff;
+}
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* ----------------------------
+   Botões
+   ---------------------------- */
+.btn {
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.25s ease-in-out;
+    padding: 0.7rem 1rem;
+}
+
+/* Gerente (verde InfraCheck) */
+.btn-success {
+    background-color: #22c55e;
+    border: none;
+}
+.btn-success:hover {
+    background-color: #1da851;
+}
+
+/* Fiscal (azul padrão) */
+.btn-primary {
+    background-color: #2563eb;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+/* Admin (preto principal) */
+.btn-dark {
+    background-color: #1c1c1c;
+    border: none;
+}
+.btn-dark:hover {
+    background-color: #000;
+}
+
+/* Botão secundário */
+.btn-outline-secondary,
+.btn-secondary {
+    border-radius: 10px;
+}
+
+/* ----------------------------
+   Tabelas
+   ---------------------------- */
+.table {
+    font-size: 0.95rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.table th {
+    text-align: center;
+    vertical-align: middle;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-weight: 600;
+}
+.table td {
+    vertical-align: middle;
+}
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* 🔹 Destaque apenas em ID, Loja, Descrição e Prioridade */
+.prioridade-alta td:nth-child(1),
+.prioridade-alta td:nth-child(2),
+.prioridade-alta td:nth-child(3),
+.prioridade-alta td:nth-child(4) {
+    background-color: rgba(220, 53, 69, 0.18) !important;
+    font-weight: 600;
+}
+
+.prioridade-media td:nth-child(1),
+.prioridade-media td:nth-child(2),
+.prioridade-media td:nth-child(3),
+.prioridade-media td:nth-child(4) {
+    background-color: rgba(255, 193, 7, 0.18) !important;
+    font-weight: 600;
+}
+
+.prioridade-baixa td:nth-child(1),
+.prioridade-baixa td:nth-child(2),
+.prioridade-baixa td:nth-child(3),
+.prioridade-baixa td:nth-child(4) {
+    background-color: rgba(40, 167, 69, 0.18) !important;
+    font-weight: 600;
+}
+
+/* ----------------------------
+   Badges (status dos chamados)
+   ---------------------------- */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.45em 0.7em;
+    border-radius: 8px;
+}
+
+/* ----------------------------
+   Alerts (mensagens do sistema)
+   ---------------------------- */
+.alert {
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ----------------------------
+   Rodapé
+   ---------------------------- */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* ----------------------------
+   Login específico
+   ---------------------------- */
+.login-card {
+    max-width: 500px;
+    width: 90%;
+    margin: auto;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+.brand-logo {
+    max-height: 80px;
+    margin-bottom: 1rem;
+}
+
+/* ----------------------------
+   Responsividade (mobile)
+   ---------------------------- */
+@media (max-width: 576px) {
+    h2, h3, h4 {
+        font-size: 1.25rem;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.7rem 1rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .login-card {
+        max-width: 95%;
+        padding: 1.5rem !important;
+    }
+
+    .brand-logo {
+        max-height: 60px;
+    }
+}
